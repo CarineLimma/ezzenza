@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <p class="sidebar-subtitle">Gestão da Clínica</p>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}" class="active">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}">Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+
+        <header class="topbar">
+            <div>
+                <p class="small-text">Gestão de atendimentos</p>
+                <h1>Agendamentos</h1>
+                <p class="page-description">
+                    Organize os horários e acompanhe os atendimentos da clínica.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                    <div>
+                        <strong>Essenza Estética</strong>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+
+                <button type="button" class="new-appointment" id="btnNewAppointment">
+                    + Novo agendamento
+                </button>
+            </div>
+        </header>
+
+        <section class="agenda-layout">
+
+            <div class="calendar-card">
+                <div class="section-header">
+                    <h2>Calendário</h2>
+                    <div class="calendar-navigation">
+                        <button type="button" id="previousMonth" aria-label="Mês anterior">&#10094;</button>
+                        <span id="currentMonth">Carregando...</span>
+                        <button type="button" id="nextMonth" aria-label="Próximo mês">&#10095;</button>
+                    </div>
+                </div>
+
+                <div class="calendar-weekdays">
+                    <span>Dom</span>
+                    <span>Seg</span>
+                    <span>Ter</span>
+                    <span>Qua</span>
+                    <span>Qui</span>
+                    <span>Sex</span>
+                    <span>Sáb</span>
+                </div>
+
+                <div class="calendar-days" id="calendarDays"></div>
+
+                <div class="calendar-legend">
+                    <span><i class="legend-dot"></i> Com agendamentos</span>
+                </div>
+            </div>
+
+            <div class="schedule-card">
+                <div class="section-header">
+                    <div>
+                        <p class="small-text">Atendimentos</p>
+                        <h2 id="selectedDateTitle">Agenda do dia</h2>
+                    </div>
+                    <button type="button" class="today-button" id="todayButton">Hoje</button>
+                </div>
+
+                <div class="schedule-timeline" id="scheduleTimeline">
+                    <p>Carregando atendimentos...</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="appointments-list">
+
+            <div class="section-header">
+                <div>
+                    <p class="small-text">Visão detalhada</p>
+                    <h2>Atendimentos do dia</h2>
+                </div>
+
+                <div class="filters">
+                    <button type="button" class="filter-btn active-filter" data-filter="all">Todos</button>
+                    <button type="button" class="filter-btn" data-filter="confirmed">Confirmados</button>
+                    <button type="button" class="filter-btn" data-filter="pending">Pendentes</button>
+                    <button type="button" class="filter-btn" data-filter="cancelled">Cancelados</button>
+                </div>
+            </div>
+
+            <div class="appointments-table-wrapper">
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Horário</th>
+                            <th>Cliente</th>
+                            <th>Procedimento</th>
+                            <th>Duração</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTableBody">
+                        <tr>
+                            <td colspan="7">Carregando agendamentos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <div class="details-overlay" id="detailsOverlay" hidden>
+            <aside class="details-panel" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+
+                <div class="details-header">
+                    <div>
+                        <p class="small-text">Informações do atendimento</p>
+                        <h2 id="detailsTitle">Detalhes do agendamento</h2>
+                    </div>
+                    <button type="button" id="closeDetails" aria-label="Fechar detalhes">&times;</button>
+                </div>
+
+                <div class="client-information">
+                    <div class="client-avatar">ES</div>
+                    <h3 id="detailClient">Nome da cliente</h3>
+                    <p id="detailPhone">Telefone não informado</p>
+                </div>
+
+                <div class="appointment-information">
+                    <div class="detail-item">
+                        <span>Procedimento</span>
+                        <strong id="detailProcedure">-</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Data</span>
+                        <strong id="detailDate">-</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Horário</span>
+                        <strong id="detailTime">-</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Duração</span>
+                        <strong id="detailDuration">-</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Valor</span>
+                        <strong id="detailValue">-</strong>
+                    </div>
+                </div>
+
+                <div class="confirmation-area">
+                    <h3>Confirmação de presença</h3>
+                    <p>Envie uma mensagem pelo WhatsApp para confirmar o horário da cliente.</p>
+                    <button type="button" class="whatsapp-button" id="sendWhatsApp">
+                        Enviar confirmação pelo WhatsApp
+                    </button>
+                </div>
+
+                <div class="status-area">
+                    <h3>Status do agendamento</h3>
+                    <select id="detailStatus">
+                        <option value="pending">Pendente</option>
+                        <option value="confirmed">Confirmado</option>
+                        <option value="cancelled">Cancelado</option>
+                        <option value="completed">Concluído</option>
+                    </select>
+                    <button type="button" class="save-button" id="saveStatus">
+                        Salvar alteração
+                    </button>
+                </div>
+
+            </aside>
+        </div>
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+
+    </main>
+
+    {% include 'modal_agendamento.html' %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

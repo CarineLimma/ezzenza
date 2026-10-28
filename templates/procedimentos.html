@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedimentos | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/procedimentos.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <p class="sidebar-subtitle">Gestão da Clínica</p>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}" class="active">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}">Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <p class="small-text">Gestão de serviços</p>
+                <h1>Procedimentos</h1>
+                <p class="page-description">
+                    Organize os serviços, valores e duração dos atendimentos da clínica.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                </div>
+                <button type="button" class="new-appointment" id="btnNewProcedure">
+                    + Novo procedimento
+                </button>
+            </div>
+        </header>
+
+        <section class="procedures-summary">
+            <div class="card">
+                <div class="card-top">
+                    <p>Total de procedimentos</p>
+                    <span>🌸</span>
+                </div>
+                <h2 id="totalProcedures">06</h2>
+                <small>Serviços cadastrados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Procedimentos ativos</p>
+                    <span>✨</span>
+                </div>
+                <h2 id="activeProcedures">05</h2>
+                <small>Disponíveis para agendamento</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Procedimentos inativos</p>
+                    <span>⏸️</span>
+                </div>
+                <h2 id="inactiveProcedures">01</h2>
+                <small>Indisponíveis para agendamento</small>
+            </div>
+        </section>
+
+        <section class="procedures-section">
+            <div class="section-header">
+                <div>
+                    <p class="small-text">Catálogo de serviços</p>
+                    <h2>Lista de procedimentos</h2>
+                </div>
+
+                <div class="procedure-filters">
+                    <input type="search" id="searchProcedure"
+                           placeholder="Buscar procedimento..."
+                           aria-label="Buscar procedimento">
+
+                    <select id="filterProcedureStatus" aria-label="Filtrar por status">
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="inactive">Inativos</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="procedures-table-wrapper">
+                <table class="procedures-table">
+                    <thead>
+                        <tr>
+                            <th>Procedimento</th>
+                            <th>Categoria</th>
+                            <th>Duração</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="proceduresTableBody">
+                        <tr data-id="1">
+                            <td><strong>Limpeza de pele</strong></td>
+                            <td>Facial</td>
+                            <td>60 minutos</td>
+                            <td>R$ 150,00</td>
+                            <td><span class="status active">Ativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="1">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="1">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="2">
+                            <td><strong>Botox</strong></td>
+                            <td>Estética facial</td>
+                            <td>45 minutos</td>
+                            <td>R$ 350,00</td>
+                            <td><span class="status active">Ativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="2">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="2">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="3">
+                            <td><strong>Microagulhamento</strong></td>
+                            <td>Facial</td>
+                            <td>90 minutos</td>
+                            <td>R$ 280,00</td>
+                            <td><span class="status active">Ativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="3">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="3">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="4">
+                            <td><strong>Harmonização facial</strong></td>
+                            <td>Estética facial</td>
+                            <td>120 minutos</td>
+                            <td>R$ 460,00</td>
+                            <td><span class="status active">Ativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="4">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="4">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="5">
+                            <td><strong>Design de sobrancelhas</strong></td>
+                            <td>Beleza</td>
+                            <td>30 minutos</td>
+                            <td>R$ 70,00</td>
+                            <td><span class="status active">Ativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="5">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="5">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="6">
+                            <td><strong>Massagem relaxante</strong></td>
+                            <td>Corporal</td>
+                            <td>60 minutos</td>
+                            <td>R$ 120,00</td>
+                            <td><span class="status inactive">Inativo</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-procedure" data-id="6">Ver</button>
+                                    <button type="button" class="edit-procedure" data-id="6">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="details-overlay" id="procedureDetailsOverlay" hidden>
+            <aside class="details-panel" role="dialog" aria-modal="true"
+                   aria-labelledby="procedureDetailsTitle">
+                <div class="details-header">
+                    <div>
+                        <p class="small-text">Informações do serviço</p>
+                        <h2 id="procedureDetailsTitle">Detalhes do procedimento</h2>
+                    </div>
+                    <button type="button" id="closeProcedureDetails"
+                            aria-label="Fechar detalhes">&times;</button>
+                </div>
+
+                <div class="procedure-information">
+                    <h3 id="detailProcedureName">Limpeza de pele</h3>
+                    <p id="detailProcedureDescription">Procedimento de limpeza facial.</p>
+                </div>
+
+                <div class="appointment-information">
+                    <div class="detail-item">
+                        <span>Categoria</span>
+                        <strong id="detailProcedureCategory">Facial</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Duração</span>
+                        <strong id="detailProcedureDuration">60 minutos</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Valor</span>
+                        <strong id="detailProcedurePrice">R$ 150,00</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Status</span>
+                        <strong id="detailProcedureStatus">Ativo</strong>
+                    </div>
+                </div>
+
+                <div class="details-actions">
+                    <button type="button" class="save-button" id="editSelectedProcedure">
+                        Editar procedimento
+                    </button>
+                </div>
+            </aside>
+        </div>
+
+        <div class="modal-overlay" id="procedureModal" hidden>
+            <div class="modal" role="dialog" aria-modal="true"
+                 aria-labelledby="procedureModalTitle">
+                <div class="modal-header">
+                    <div>
+                        <p class="small-text">Catálogo de serviços</p>
+                        <h2 id="procedureModalTitle">Novo procedimento</h2>
+                    </div>
+                    <button type="button" class="close-modal" id="closeProcedureModal"
+                            aria-label="Fechar formulário">&times;</button>
+                </div>
+
+                <form id="procedureForm">
+                    <input type="hidden" id="procedureId" name="procedureId">
+
+                    <div class="form-group">
+                        <label for="procedureName">Nome do procedimento</label>
+                        <input type="text" id="procedureName" name="procedureName"
+                               placeholder="Ex.: Limpeza de pele" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="procedureCategory">Categoria</label>
+                        <select id="procedureCategory" name="procedureCategory" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Facial">Facial</option>
+                            <option value="Estética facial">Estética facial</option>
+                            <option value="Corporal">Corporal</option>
+                            <option value="Beleza">Beleza</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="procedureDuration">Duração (minutos)</label>
+                            <input type="number" id="procedureDuration" name="procedureDuration"
+                                   min="1" placeholder="60" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="procedurePrice">Valor (R$)</label>
+                            <input type="number" id="procedurePrice" name="procedurePrice"
+                                   min="0" step="0.01" placeholder="150.00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="procedureStatus">Status</label>
+                        <select id="procedureStatus" name="procedureStatus">
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="procedureDescription">Descrição do procedimento</label>
+                        <textarea id="procedureDescription" name="procedureDescription"
+                                  rows="4" placeholder="Descreva o procedimento..."></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-button" id="cancelProcedure">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="save-button">
+                            Salvar procedimento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/procedimentos.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <p class="sidebar-subtitle">Gestão da Clínica</p>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}" class="active">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}">Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <p class="small-text">Gestão de clientes</p>
+                <h1>Clientes</h1>
+                <p class="page-description">
+                    Gerencie os cadastros e acompanhe o histórico de atendimentos.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                </div>
+                <button type="button" class="new-appointment">+ Nova cliente</button>
+            </div>
+        </header>
+
+        <section class="clients-summary">
+            <div class="card">
+                <div class="card-top">
+                    <p>Total de clientes</p>
+                    <span>👥</span>
+                </div>
+                <h2 id="totalClients"></h2>
+                <small>Clientes cadastradas</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Novas clientes</p>
+                    <span>✨</span>
+                </div>
+                <h2 id="newClients"></h2>
+                <small>Cadastros deste mês</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Clientes atendidas</p>
+                    <span>🌷</span>
+                </div>
+                <h2 id="attendedClients"></h2>
+                <small>Com atendimentos realizados</small>
+            </div>
+        </section>
+
+        <section class="clients-section">
+            <div class="section-header">
+                <div>
+                    <p class="small-text">Cadastro e acompanhamento</p>
+                    <h2>Lista de clientes</h2>
+                </div>
+
+                <div class="client-search">
+                    <label for="searchClient" class="visually-hidden">Buscar cliente</label>
+                    <input type="search" id="searchClient" placeholder="Buscar cliente...">
+                </div>
+            </div>
+
+            <div class="clients-table-wrapper">
+                <table class="clients-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>E-mail</th>
+                            <th>Último atendimento</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody">
+                        <tr data-id="1">
+                            <td>
+                                <div class="client-cell">
+                                    <span class="client-initials">MA</span>
+                                    <span>Mariana Alves</span>
+                                </div>
+                            </td>
+                            <td>(47) 99999-0001</td>
+                            <td>mariana@exemplo.com</td>
+                            <td>15/10/2026</td>
+                            <td><span class="status active">Ativa</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-client" data-id="1">Ver</button>
+                                    <button type="button" class="edit-client" data-id="1">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="2">
+                            <td>
+                                <div class="client-cell">
+                                    <span class="client-initials">CS</span>
+                                    <span>Camila Souza</span>
+                                </div>
+                            </td>
+                            <td>(47) 99999-0002</td>
+                            <td>camila@exemplo.com</td>
+                            <td>10/10/2026</td>
+                            <td><span class="status active">Ativa</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-client" data-id="2">Ver</button>
+                                    <button type="button" class="edit-client" data-id="2">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="3">
+                            <td>
+                                <div class="client-cell">
+                                    <span class="client-initials">FL</span>
+                                    <span>Fernanda Lima</span>
+                                </div>
+                            </td>
+                            <td>(47) 99999-0003</td>
+                            <td>fernanda@exemplo.com</td>
+                            <td>08/10/2026</td>
+                            <td><span class="status active">Ativa</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-client" data-id="3">Ver</button>
+                                    <button type="button" class="edit-client" data-id="3">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="4">
+                            <td>
+                                <div class="client-cell">
+                                    <span class="client-initials">PM</span>
+                                    <span>Paula Mendes</span>
+                                </div>
+                            </td>
+                            <td>(47) 99999-0004</td>
+                            <td>paula@exemplo.com</td>
+                            <td>02/09/2026</td>
+                            <td><span class="status inactive">Inativa</span></td>
+                            <td>
+                                <div class="actions">
+                                    <button type="button" class="view-client" data-id="4">Ver</button>
+                                    <button type="button" class="edit-client" data-id="4">Editar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="details-overlay" id="clientDetailsOverlay" hidden>
+            <aside class="details-panel" role="dialog" aria-modal="true" aria-labelledby="clientDetailsTitle">
+                <div class="details-header">
+                    <div>
+                        <p class="small-text">Cadastro da cliente</p>
+                        <h2 id="clientDetailsTitle">Detalhes da cliente</h2>
+                    </div>
+                    <button type="button" id="closeClientDetails" aria-label="Fechar detalhes">&times;</button>
+                </div>
+
+                <div class="client-information">
+                    <div class="client-avatar" id="detailAvatar">MA</div>
+                    <h3 id="detailClientName">Mariana Alves</h3>
+                    <p id="detailClientEmail">mariana@exemplo.com</p>
+                </div>
+
+                <div class="appointment-information">
+                    <div class="detail-item">
+                        <span>Telefone</span>
+                        <strong id="detailClientPhone">(47) 99999-0001</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Data de nascimento</span>
+                        <strong id="detailClientBirth">Não informada</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Último atendimento</span>
+                        <strong id="detailLastVisit">15/10/2026</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Status</span>
+                        <strong id="detailClientStatus">Ativa</strong>
+                    </div>
+                </div>
+
+                <div class="client-history">
+                    <h3>Histórico de atendimentos</h3>
+                    <div id="clientHistoryList">
+                        <p>Os atendimentos realizados aparecerão aqui.</p>
+                    </div>
+                </div>
+
+                <div class="details-actions">
+                    <button type="button" class="save-button" id="editSelectedClient">
+                        Editar cadastro
+                    </button>
+                </div>
+            </aside>
+        </div>
+
+        <div class="modal-overlay" id="clientModal" hidden>
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="clientModalTitle">
+                <div class="modal-header">
+                    <div>
+                        <p class="small-text">Gestão de clientes</p>
+                        <h2 id="clientModalTitle">Nova cliente</h2>
+                    </div>
+                    <button type="button" class="close-modal" id="closeClientModal" aria-label="Fechar formulário">
+                        &times;
+                    </button>
+                </div>
+
+                <form id="clientForm">
+                    <input type="hidden" id="clientId" name="clientId">
+
+                    <div class="form-group">
+                        <label for="clientName">Nome completo</label>
+                        <input type="text" id="clientName" name="clientName"
+                               placeholder="Nome da cliente" autocomplete="name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientPhone">Telefone / WhatsApp</label>
+                            <input type="tel" id="clientPhone" name="clientPhone"
+                                   placeholder="(47) 99999-9999" autocomplete="tel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientBirth">Data de nascimento</label>
+                            <input type="date" id="clientBirth" name="clientBirth">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientEmail">E-mail</label>
+                        <input type="email" id="clientEmail" name="clientEmail"
+                               placeholder="cliente@exemplo.com" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientStatus">Status</label>
+                        <select id="clientStatus" name="clientStatus">
+                            <option value="active">Ativa</option>
+                            <option value="inactive">Inativa</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientNotes">Observações</label>
+                        <textarea id="clientNotes" name="clientNotes" rows="4"
+                                  placeholder="Observações gerais sobre a cliente..."></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-button" id="cancelClient">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="save-button">
+                            Salvar cliente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/clientes.js') }}"></script>
+</body>
+</html>

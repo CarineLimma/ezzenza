@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <p class="sidebar-subtitle">Gestão da Clínica</p>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}" class="active">Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <p class="small-text">Personalização do sistema</p>
+                <h1>Configurações</h1>
+                <p class="page-description">
+                    Gerencie os dados e preferências de funcionamento da clínica.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                    <div>
+                        <strong>Essenza Estética</strong>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="settings-navigation" aria-label="Seções das configurações">
+            <a href="#clinicSettings" class="active">Dados da clínica</a>
+            <a href="#scheduleSettings">Horários</a>
+            <a href="#appointmentSettings">Agendamentos</a>
+            <a href="#whatsappSettings">WhatsApp</a>
+            <a href="#paymentSettings">Pagamentos</a>
+            <a href="#appearanceSettings">Aparência</a>
+        </nav>
+
+        <form id="settingsForm">
+            <section class="settings-card" id="clinicSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Informações gerais</p>
+                        <h2>Dados da clínica</h2>
+                        <p>Configure as informações utilizadas no sistema.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clinicName">Nome da clínica</label>
+                    <input type="text" id="clinicName" name="clinicName"
+                           value="Essenza Estética" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clinicPhone">Telefone</label>
+                        <input type="tel" id="clinicPhone" name="clinicPhone"
+                               placeholder="(47) 99999-9999">
+                    </div>
+                    <div class="form-group">
+                        <label for="clinicEmail">E-mail</label>
+                        <input type="email" id="clinicEmail" name="clinicEmail"
+                               placeholder="contato@clinica.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clinicDocument">CNPJ</label>
+                        <input type="text" id="clinicDocument" name="clinicDocument"
+                               placeholder="00.000.000/0000-00">
+                    </div>
+                    <div class="form-group">
+                        <label for="clinicCity">Cidade</label>
+                        <input type="text" id="clinicCity" name="clinicCity"
+                               placeholder="Cidade da clínica">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clinicAddress">Endereço</label>
+                    <input type="text" id="clinicAddress" name="clinicAddress"
+                           placeholder="Rua, número e bairro">
+                </div>
+
+                <div class="form-group">
+                    <label for="clinicDescription">Descrição da clínica</label>
+                    <textarea id="clinicDescription" name="clinicDescription"
+                              rows="3" placeholder="Breve descrição da clínica..."></textarea>
+                </div>
+            </section>
+
+            <section class="settings-card" id="scheduleSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Disponibilidade</p>
+                        <h2>Horários de funcionamento</h2>
+                        <p>Defina os horários disponíveis para os atendimentos.</p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="openingTime">Horário de abertura</label>
+                        <input type="time" id="openingTime" name="openingTime" value="08:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="closingTime">Horário de encerramento</label>
+                        <input type="time" id="closingTime" name="closingTime" value="18:00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lunchStart">Início do intervalo</label>
+                    <input type="time" id="lunchStart" name="lunchStart" value="12:00">
+                </div>
+
+                <div class="form-group">
+                    <label for="lunchEnd">Fim do intervalo</label>
+                    <input type="time" id="lunchEnd" name="lunchEnd" value="13:00">
+                </div>
+
+                <fieldset class="working-days">
+                    <legend>Dias de funcionamento</legend>
+                    <div class="days-options">
+                        <label><input type="checkbox" name="workingDays" value="monday" checked> Segunda</label>
+                        <label><input type="checkbox" name="workingDays" value="tuesday" checked> Terça</label>
+                        <label><input type="checkbox" name="workingDays" value="wednesday" checked> Quarta</label>
+                        <label><input type="checkbox" name="workingDays" value="thursday" checked> Quinta</label>
+                        <label><input type="checkbox" name="workingDays" value="friday" checked> Sexta</label>
+                        <label><input type="checkbox" name="workingDays" value="saturday"> Sábado</label>
+                        <label><input type="checkbox" name="workingDays" value="sunday"> Domingo</label>
+                    </div>
+                </fieldset>
+            </section>
+
+            <section class="settings-card" id="appointmentSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Organização da agenda</p>
+                        <h2>Preferências de agendamento</h2>
+                        <p>Personalize o funcionamento dos agendamentos.</p>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="appointmentInterval">Intervalo entre horários</label>
+                        <select id="appointmentInterval" name="appointmentInterval">
+                            <option value="15">15 minutos</option>
+                            <option value="30" selected>30 minutos</option>
+                            <option value="60">60 minutos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="defaultAppointmentStatus">Status inicial</label>
+                        <select id="defaultAppointmentStatus" name="defaultAppointmentStatus">
+                            <option value="pending" selected>Pendente</option>
+                            <option value="confirmed">Confirmado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <h3>Permitir agendamentos futuros</h3>
+                        <p>Habilita o cadastro de atendimentos para outras datas.</p>
+                    </div>
+                    <input type="checkbox" id="allowFutureAppointments"
+                           name="allowFutureAppointments" checked
+                           aria-label="Permitir agendamentos futuros">
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <h3>Evitar conflitos de horário</h3>
+                        <p>Impede dois agendamentos simultâneos para o mesmo recurso.</p>
+                    </div>
+                    <input type="checkbox" id="preventDoubleBooking"
+                           name="preventDoubleBooking" checked
+                           aria-label="Evitar conflitos de horário">
+                </div>
+            </section>
+
+            <section class="settings-card" id="whatsappSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Comunicação</p>
+                        <h2>WhatsApp</h2>
+                        <p>Configure a mensagem utilizada na confirmação de agendamentos.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="whatsappNumber">WhatsApp da clínica</label>
+                    <input type="tel" id="whatsappNumber" name="whatsappNumber"
+                           placeholder="(47) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmationMessage">Mensagem de confirmação</label>
+                    <textarea id="confirmationMessage" name="confirmationMessage" rows="6">Olá, {cliente}! Tudo bem?
+
+Aqui é da {clinica}. Gostaríamos de confirmar seu agendamento:
+
+Procedimento: {procedimento}
+Data: {data}
+Horário: {horario}
+
+Podemos confirmar sua presença?</textarea>
+                    <small>
+                        Variáveis disponíveis: {cliente}, {clinica}, {procedimento},
+                        {data} e {horario}.
+                    </small>
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <h3>Utilizar mensagem personalizada</h3>
+                        <p>Prepara o texto configurado ao abrir o WhatsApp.</p>
+                    </div>
+                    <input type="checkbox" id="useCustomMessage"
+                           name="useCustomMessage" checked
+                           aria-label="Utilizar mensagem personalizada">
+                </div>
+            </section>
+
+            <section class="settings-card" id="paymentSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Recebimentos</p>
+                        <h2>Configurações de pagamento</h2>
+                        <p>Defina os dados utilizados nos recebimentos da clínica.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pixKey">Chave Pix</label>
+                    <input type="text" id="pixKey" name="pixKey"
+                           placeholder="Informe a chave Pix">
+                </div>
+
+                <div class="form-group">
+                    <label for="pixHolder">Nome do recebedor</label>
+                    <input type="text" id="pixHolder" name="pixHolder"
+                           placeholder="Nome do titular">
+                </div>
+
+                <fieldset class="payment-options">
+                    <legend>Formas de pagamento aceitas</legend>
+                    <label><input type="checkbox" name="acceptedPayments" value="pix" checked> Pix</label>
+                    <label><input type="checkbox" name="acceptedPayments" value="card" checked> Cartão</label>
+                    <label><input type="checkbox" name="acceptedPayments" value="cash" checked> Dinheiro</label>
+                    <label><input type="checkbox" name="acceptedPayments" value="transfer"> Transferência</label>
+                </fieldset>
+
+                <div class="settings-option">
+                    <div>
+                        <h3>Confirmação manual de pagamento</h3>
+                        <p>O administrador confirma os pagamentos recebidos.</p>
+                    </div>
+                    <input type="checkbox" id="manualPaymentConfirmation"
+                           name="manualPaymentConfirmation" checked
+                           aria-label="Confirmação manual de pagamento">
+                </div>
+            </section>
+
+            <section class="settings-card" id="appearanceSettings">
+                <div class="settings-header">
+                    <div>
+                        <p class="small-text">Identidade visual</p>
+                        <h2>Aparência do sistema</h2>
+                        <p>Personalize as informações visuais da clínica.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="systemDisplayName">Nome exibido no sistema</label>
+                    <input type="text" id="systemDisplayName" name="systemDisplayName"
+                           value="Essenza Estética">
+                </div>
+            </section>
+
+            <div class="settings-actions">
+                <button type="reset" class="cancel-button">Desfazer alterações</button>
+                <button type="submit" class="save-button" id="saveSettings">
+                    Salvar configurações
+                </button>
+            </div>
+        </form>
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/configuracao.js') }}"></script>
+</body>
+</html>

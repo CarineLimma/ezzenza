@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financeiro | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <p class="sidebar-subtitle">Gestão da Clínica</p>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}" class="active">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}">Configurações</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <p class="small-text">Controle financeiro</p>
+                <h1>Financeiro</h1>
+                <p class="page-description">
+                    Acompanhe receitas, despesas e pagamentos da clínica.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                    <div>
+                        <strong>Essenza Estética</strong>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+                <button type="button" class="new-appointment" id="btnNewTransaction">
+                    + Nova movimentação
+                </button>
+            </div>
+        </header>
+
+        <section class="finance-period">
+            <div>
+                <p class="small-text">Visão financeira</p>
+                <h2>Resumo do período</h2>
+            </div>
+            <div class="period-filters">
+                <label for="financeMonth">Mês</label>
+                <input type="month" id="financeMonth" name="financeMonth" value="2026-10">
+            </div>
+        </section>
+
+        <section class="finance-summary">
+            <div class="card">
+                <div class="card-top">
+                    <p>Receitas recebidas</p>
+                    <span>💰</span>
+                </div>
+                <h2 id="totalIncome">R$ 8.450,00</h2>
+                <small>Pagamentos confirmados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Despesas pagas</p>
+                    <span>📉</span>
+                </div>
+                <h2 id="totalExpenses">R$ 2.180,00</h2>
+                <small>Saídas do período</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Saldo do período</p>
+                    <span>💳</span>
+                </div>
+                <h2 id="totalBalance">R$ 6.270,00</h2>
+                <small>Receitas menos despesas pagas</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>A receber</p>
+                    <span>⏳</span>
+                </div>
+                <h2 id="totalPendingPayments">R$ 1.240,00</h2>
+                <small>Pagamentos ainda pendentes</small>
+            </div>
+        </section>
+
+        <section class="finance-layout">
+            <div class="transactions-section">
+                <div class="section-header">
+                    <div>
+                        <p class="small-text">Entradas e saídas</p>
+                        <h2>Movimentações financeiras</h2>
+                    </div>
+                    <div class="transaction-filters">
+                        <select id="filterTransactionType" aria-label="Filtrar movimentações">
+                            <option value="all">Todas</option>
+                            <option value="income">Receitas</option>
+                            <option value="expense">Despesas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="finance-table-wrapper">
+                    <table class="finance-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Categoria</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <tr data-id="1">
+                                <td>15/10/2026</td>
+                                <td>Limpeza de pele <small>Mariana Alves</small></td>
+                                <td>Procedimentos</td>
+                                <td><span class="transaction-type income">Receita</span></td>
+                                <td>R$ 150,00</td>
+                                <td><span class="status paid">Recebido</span></td>
+                                <td>
+                                    <button type="button" class="view-transaction" data-id="1">Ver</button>
+                                </td>
+                            </tr>
+
+                            <tr data-id="2">
+                                <td>16/10/2026</td>
+                                <td>Botox <small>Camila Souza</small></td>
+                                <td>Procedimentos</td>
+                                <td><span class="transaction-type income">Receita</span></td>
+                                <td>R$ 350,00</td>
+                                <td><span class="status pending">Pendente</span></td>
+                                <td>
+                                    <button type="button" class="view-transaction" data-id="2">Ver</button>
+                                </td>
+                            </tr>
+
+                            <tr data-id="3">
+                                <td>16/10/2026</td>
+                                <td>Compra de materiais</td>
+                                <td>Materiais</td>
+                                <td><span class="transaction-type expense">Despesa</span></td>
+                                <td>R$ 280,00</td>
+                                <td><span class="status paid">Pago</span></td>
+                                <td>
+                                    <button type="button" class="view-transaction" data-id="3">Ver</button>
+                                </td>
+                            </tr>
+
+                            <tr data-id="4">
+                                <td>17/10/2026</td>
+                                <td>Microagulhamento <small>Fernanda Lima</small></td>
+                                <td>Procedimentos</td>
+                                <td><span class="transaction-type income">Receita</span></td>
+                                <td>R$ 280,00</td>
+                                <td><span class="status pending">Pendente</span></td>
+                                <td>
+                                    <button type="button" class="view-transaction" data-id="4">Ver</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <aside class="finance-sidebar">
+                <div class="finance-overview">
+                    <p class="small-text">Visão geral</p>
+                    <h2>Resumo financeiro</h2>
+
+                    <div class="summary-item">
+                        <span>Receitas recebidas</span>
+                        <strong id="summaryIncome">R$ 8.450,00</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Despesas pagas</span>
+                        <strong id="summaryExpenses">R$ 2.180,00</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Saldo</span>
+                        <strong id="summaryBalance">R$ 6.270,00</strong>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <p class="small-text">Recebimentos</p>
+                    <h2>Formas de pagamento</h2>
+
+                    <div class="summary-item">
+                        <span>Pix</span>
+                        <strong id="pixTotal">R$ 4.200,00</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Cartão</span>
+                        <strong id="cardTotal">R$ 3.100,00</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Dinheiro</span>
+                        <strong id="cashTotal">R$ 1.150,00</strong>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="payments-section">
+            <div class="section-header">
+                <div>
+                    <p class="small-text">Acompanhamento</p>
+                    <h2>Pagamentos pendentes</h2>
+                </div>
+            </div>
+
+            <div class="payments-table-wrapper">
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Procedimento</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingPaymentsBody">
+                        <tr data-id="2">
+                            <td>Camila Souza</td>
+                            <td>Botox</td>
+                            <td>16/10/2026</td>
+                            <td>R$ 350,00</td>
+                            <td><span class="status pending">Pendente</span></td>
+                            <td>
+                                <button type="button" class="confirm-payment" data-id="2">
+                                    Confirmar pagamento
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr data-id="4">
+                            <td>Fernanda Lima</td>
+                            <td>Microagulhamento</td>
+                            <td>17/10/2026</td>
+                            <td>R$ 280,00</td>
+                            <td><span class="status pending">Pendente</span></td>
+                            <td>
+                                <button type="button" class="confirm-payment" data-id="4">
+                                    Confirmar pagamento
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="details-overlay" id="transactionDetailsOverlay" hidden>
+            <aside class="details-panel" role="dialog" aria-modal="true"
+                   aria-labelledby="transactionDetailsTitle">
+                <div class="details-header">
+                    <div>
+                        <p class="small-text">Informações financeiras</p>
+                        <h2 id="transactionDetailsTitle">Detalhes da movimentação</h2>
+                    </div>
+                    <button type="button" id="closeTransactionDetails"
+                            aria-label="Fechar detalhes">&times;</button>
+                </div>
+
+                <div class="appointment-information">
+                    <div class="detail-item">
+                        <span>Descrição</span>
+                        <strong id="detailDescription">Limpeza de pele</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Data</span>
+                        <strong id="detailTransactionDate">15/10/2026</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Tipo</span>
+                        <strong id="detailTransactionType">Receita</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Valor</span>
+                        <strong id="detailTransactionValue">R$ 150,00</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Status</span>
+                        <strong id="detailTransactionStatus">Recebido</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Forma de pagamento</span>
+                        <strong id="detailPaymentMethod">Pix</strong>
+                    </div>
+                </div>
+
+                <div class="details-actions">
+                    <button type="button" class="save-button" id="editSelectedTransaction">
+                        Editar movimentação
+                    </button>
+                </div>
+            </aside>
+        </div>
+
+        <div class="modal-overlay" id="transactionModal" hidden>
+            <div class="modal" role="dialog" aria-modal="true"
+                 aria-labelledby="transactionModalTitle">
+                <div class="modal-header">
+                    <div>
+                        <p class="small-text">Controle financeiro</p>
+                        <h2 id="transactionModalTitle">Nova movimentação</h2>
+                    </div>
+                    <button type="button" class="close-modal" id="closeTransactionModal"
+                            aria-label="Fechar formulário">&times;</button>
+                </div>
+
+                <form id="transactionForm">
+                    <input type="hidden" id="transactionId" name="transactionId">
+
+                    <div class="form-group">
+                        <label for="transactionDescription">Descrição</label>
+                        <input type="text" id="transactionDescription"
+                               name="transactionDescription"
+                               placeholder="Ex.: Compra de materiais" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transactionType">Tipo</label>
+                            <select id="transactionType" name="transactionType" required>
+                                <option value="income">Receita</option>
+                                <option value="expense">Despesa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionCategory">Categoria</label>
+                            <select id="transactionCategory" name="transactionCategory" required>
+                                <option value="">Selecione</option>
+                                <option value="Procedimentos">Procedimentos</option>
+                                <option value="Materiais">Materiais</option>
+                                <option value="Aluguel">Aluguel</option>
+                                <option value="Equipamentos">Equipamentos</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transactionValue">Valor (R$)</label>
+                            <input type="number" id="transactionValue" name="transactionValue"
+                                   min="0.01" step="0.01" placeholder="150.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionDate">Data</label>
+                            <input type="date" id="transactionDate" name="transactionDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transactionStatus">Status</label>
+                            <select id="transactionStatus" name="transactionStatus" required>
+                                <option value="pending">Pendente</option>
+                                <option value="paid">Pago / Recebido</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentMethod">Forma de pagamento</label>
+                            <select id="paymentMethod" name="paymentMethod">
+                                <option value="">Não informada</option>
+                                <option value="pix">Pix</option>
+                                <option value="card">Cartão</option>
+                                <option value="cash">Dinheiro</option>
+                                <option value="transfer">Transferência</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transactionNotes">Observações</label>
+                        <textarea id="transactionNotes" name="transactionNotes" rows="4"
+                                  placeholder="Informações adicionais..."></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-button" id="cancelTransaction">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="save-button">
+                            Salvar movimentação
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/financeiro.js') }}"></script>
+</body>
+</html>

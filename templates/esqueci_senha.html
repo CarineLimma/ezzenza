@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar senha | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/esqueci_senha.css') }}">
+</head>
+<body>
+    <main class="login-container">
+        <img
+            src="{{ url_for('static', filename='img/img.png') }}"
+            alt=""
+            class="login-illustration"
+            aria-hidden="true"
+        >
+
+        <section class="login-card">
+            <header class="login-header">
+                <span class="logo-icon">✦</span>
+                <h1>ESSENZA</h1>
+                <p>Esqueceu sua senha?</p>
+                <span>Vamos ajudar você a recuperar seu acesso.</span>
+            </header>
+
+            <div class="recovery-content">
+                <form
+                    action="{{ url_for('esqueci_senha') }}"
+                    method="POST"
+                    class="recovery-form"
+                    id="formRecuperacao"
+                >
+                    <div class="form-group">
+                        <label for="email">E-mail cadastrado</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Digite seu e-mail"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-login" id="btnRecuperar">
+                        Enviar código de recuperação
+                    </button>
+                </form>
+            </div>
+
+            <footer class="login-footer">
+                <p>
+                    Lembrou sua senha?
+                    <a href="{{ url_for('login') }}">Voltar para o login</a>
+                </p>
+            </footer>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/esqueci_senha.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #f9f4f1,
+        #eee1e4
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+    overflow-x: hidden;
+}
+
+.login-container {
+    position: relative;
+    isolation: isolate;
+
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.login-illustration {
+    position: absolute;
+
+    width: 950px;
+    max-width: none;
+    height: auto;
+
+    right: -560px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: -1;
+    opacity: 1;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.login-card {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    background: #ffffff;
+
+    padding: 48px 38px;
+    border-radius: 20px;
+
+    box-shadow:
+        0 18px 55px rgba(75, 45, 52, 0.09);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    display: block;
+
+    color: #ad7d88;
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+.login-header h1 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: 34px;
+    letter-spacing: 5px;
+
+    color: #6c4751;
+    margin-bottom: 22px;
+}
+
+.login-header p {
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #503d42;
+    margin-bottom: 8px;
+}
+
+.login-header span:not(.logo-icon) {
+    display: block;
+
+    color: #96888c;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+
+.recovery-content {
+    width: 100%;
+}
+
+
+.recovery-description {
+    display: block;
+
+    color: #96888c;
+    font-size: 13px;
+
+    line-height: 1.8;
+    text-align: center;
+
+    margin: 0 0 45px 0;
+}
+
+.recovery-form {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    gap: 25px;
+}
+
+.recovery-form .form-group {
+    margin: 0;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #594b4f;
+    margin-bottom: 10px;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 14px;
+    min-height: 48px;
+
+    border: 1px solid #e8dfe1;
+    border-radius: 9px;
+
+    outline: none;
+    background: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #a69a9e;
+}
+
+.form-group input:focus {
+    border-color: #ad7d88;
+
+    box-shadow:
+        0 0 0 3px rgba(173, 125, 136, 0.12);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+
+    background: #a77380;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
+}
+
+.btn-login:hover {
+    background: #895965;
+    transform: translateY(-1px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-login:focus-visible {
+    outline: 3px solid #d6abb5;
+    outline-offset: 3px;
+}
+
+.login-footer {
+    text-align: center;
+
+    margin-top: 30px;
+
+    font-size: 13px;
+    color: #96888c;
+}
+
+.login-footer a {
+    color: #a77380;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.login-footer a:focus-visible {
+    outline: 3px solid #d6abb5;
+    outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+    .login-illustration {
+        width: 750px;
+        right: -450px;
+        opacity: 0.85;
+    }
+}
+
+@media (max-width: 600px) {
+    .login-illustration {
+        display: none;
+    }
+
+    .login-container {
+        max-width: 430px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .login-card {
+        padding: 35px 23px;
+    }
+
+    .login-header h1 {
+        font-size: 29px;
+    }
+
+    .login-header p {
+        font-size: 18px;
+    }
+
+    .recovery-description {
+        font-size: 12px;
+        line-height: 1.8;
+        margin-bottom: 35px;
+    }
+
+    .recovery-form {
+        gap: 22px;
+    }
+
+    .btn-login {
+        font-size: 14px;
+    }
+}

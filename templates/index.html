@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essenza | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-usuario-nome="">
+    <aside class="sidebar">
+        <div class="logo">Essenza</div>
+        <div class="sidebar-subtitle">Gestão da Clínica</div>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}" class="active">Dashboard</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('procedimentos') }}">Procedimentos</a>
+            <a href="{{ url_for('financeiro') }}">Financeiro</a>
+            <a href="{{ url_for('configuracoes') }}">Configurações</a>
+            <form action="{{ url_for('sair') }}" method="POST" class="logout-form">
+        <button type="submit" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sair da conta</span>
+    </button>
+</form>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>MW3 Digital</p>
+            <span>Sistema demonstrativo</span>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <p class="small-text">Painel administrativo</p>
+                <h1>Dashboard</h1>
+            </div>
+            <div class="topbar-actions">
+                <div class="admin-profile">
+                    <div class="admin-avatar">ES</div>
+                    <div>
+                        <strong>Essenza Estética</strong>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="welcome">
+            <div>
+                <p class="small-text">Visão geral</p>
+                <h2 id="saudacao">Bem-vinda ao Essenza!</h2>
+                <p id="mensagemBoasVindas">
+                    Confira os agendamentos e informações da clínica para hoje.
+                </p>
+                <p id="dataAtual"></p>
+            </div>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <div class="card-top">
+                    <p>Agendamentos hoje</p>
+                    <span>📅</span>
+                </div>
+                <h2 id="totalAppointments">0</h2>
+                <small id="confirmedAppointmentsText">0 confirmados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Aguardando confirmação</p>
+                    <span>⏳</span>
+                </div>
+                <h2 id="totalPending">0</h2>
+                <small>Necessitam de atenção</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Clientes cadastrados</p>
+                    <span>👤</span>
+                </div>
+                <h2 id="totalClients">--</h2>
+                <small>Total cadastrado</small>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <p>Faturamento previsto</p>
+                    <span>💰</span>
+                </div>
+                <h2 id="totalRevenue">R$ 0,00</h2>
+                <small>Referente aos atendimentos de hoje</small>
+            </div>
+        </section>
+
+        <section class="appointments">
+            <div class="section-header">
+                <div>
+                    <p class="small-text" id="agendaData">Data de hoje</p>
+                    <h2>Agenda de hoje</h2>
+                </div>
+
+                <div class="filters">
+                    <button type="button" class="filter-btn active-filter" data-filter="all">
+                        Todos
+                    </button>
+                    <button type="button" class="filter-btn" data-filter="confirmed">
+                        Confirmados
+                    </button>
+                    <button type="button" class="filter-btn" data-filter="pending">
+                        Pendentes
+                    </button>
+                </div>
+            </div>
+
+            <div class="table" id="appointmentsTable">
+                <div class="table-header">
+                    <span>Horário</span>
+                    <span>Cliente</span>
+                    <span>Procedimento</span>
+                    <span>Valor</span>
+                    <span>Status</span>
+                    <span>Ações</span>
+                </div>
+
+                <div class="table-row appointment-row" data-status="confirmed">
+                    <span>09:00</span>
+                    <span>Mariana Alves</span>
+                    <span>Limpeza de pele</span>
+                    <span>R$ 150,00</span>
+                    <span class="status confirmed">Confirmado</span>
+                    <div class="actions">
+                        <button type="button" class="edit-button">Editar</button>
+                        <button type="button" class="view-button">Ver</button>
+                    </div>
+                </div>
+
+                <div class="table-row appointment-row" data-status="pending">
+                    <span>10:30</span>
+                    <span>Camila Souza</span>
+                    <span>Botox</span>
+                    <span>R$ 350,00</span>
+                    <span class="status pending">Pendente</span>
+                    <div class="actions">
+                        <button type="button" class="edit-button">Editar</button>
+                        <button type="button" class="view-button">Ver</button>
+                    </div>
+                </div>
+
+                <div class="table-row appointment-row" data-status="confirmed">
+                    <span>13:00</span>
+                    <span>Fernanda Lima</span>
+                    <span>Microagulhamento</span>
+                    <span>R$ 280,00</span>
+                    <span class="status confirmed">Confirmado</span>
+                    <div class="actions">
+                        <button type="button" class="edit-button">Editar</button>
+                        <button type="button" class="view-button">Ver</button>
+                    </div>
+                </div>
+
+                <div class="table-row appointment-row" data-status="pending">
+                    <span>15:30</span>
+                    <span>Paula Mendes</span>
+                    <span>Harmonização facial</span>
+                    <span>R$ 460,00</span>
+                    <span class="status pending">Pendente</span>
+                    <div class="actions">
+                        <button type="button" class="edit-button">Editar</button>
+                        <button type="button" class="view-button">Ver</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bottom-content">
+            <div class="next-appointment">
+                <p class="small-text">Próximo atendimento</p>
+                <h2 id="nextClient">Camila Souza</h2>
+                <p id="nextProcedure">Botox</p>
+                <strong id="nextTime">10:30</strong>
+                <button type="button" class="edit-button" id="btnProximoDetalhes">
+                    Ver detalhes
+                </button>
+            </div>
+
+            <div class="summary">
+                <p class="small-text">Resumo do dia</p>
+                <h2>Desempenho</h2>
+
+                <div class="summary-item">
+                    <span>Confirmados</span>
+                    <strong id="summaryConfirmed">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Pendentes</span>
+                    <strong id="summaryPending">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Cancelados</span>
+                    <strong id="summaryCancelled">0</strong>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Essenza Gestão</p>
+            <span>Desenvolvido por MW3 Digital</span>
+        </footer>
+    </main>
+
+    <div id="modalDetalhes" class="modal-overlay" hidden>
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <p class="small-text">Agenda</p>
+                    <h2>Detalhes do atendimento</h2>
+                </div>
+                <button type="button" id="fecharDetalhes" class="close-modal"
+                        aria-label="Fechar detalhes">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <p><strong>Cliente:</strong> <span id="modalCliente"></span></p>
+                <p><strong>Procedimento:</strong> <span id="modalProcedimento"></span></p>
+                <p><strong>Horário:</strong> <span id="modalHorario"></span></p>
+                <p><strong>Valor:</strong> <span id="modalValor"></span></p>
+                <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel-button" id="btnFecharDetalhes">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEditar" class="modal-overlay" hidden>
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <p class="small-text">Agenda</p>
+                    <h2>Editar atendimento</h2>
+                </div>
+                <button type="button" class="close-modal" id="fecharEdicao"
+                        aria-label="Fechar edição">✕</button>
+            </div>
+
+            <form id="formEditarAgendamento">
+                <input type="hidden" id="editarId" name="id">
+
+                <div class="form-group">
+                    <label for="editarCliente">Cliente</label>
+                    <input type="text" id="editarCliente" name="cliente_nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editarTelefone">Telefone</label>
+                    <input type="tel" id="editarTelefone" name="telefone"
+                           placeholder="(47) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="editarProcedimento">Procedimento</label>
+                    <input type="text" id="editarProcedimento" name="procedimento" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editarData">Data</label>
+                        <input type="date" id="editarData" name="data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarHorario">Horário</label>
+                        <input type="time" id="editarHorario" name="horario" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editarDuracao">Duração (min)</label>
+                        <input type="number" id="editarDuracao" name="duracao" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editarValor">Valor (R$)</label>
+                        <input type="number" id="editarValor" name="valor"
+                               min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editarStatus">Status</label>
+                    <select id="editarStatus" name="status" required>
+                        <option value="pending">Pendente</option>
+                        <option value="confirmed">Confirmado</option>
+                        <option value="completed">Concluído</option>
+                        <option value="cancelled">Cancelado</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-button" id="cancelarEdicao">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="save-button">
+                        Salvar alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

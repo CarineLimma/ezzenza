@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar conta | Essenza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+</head>
+<body>
+    <main class="cadastro-container">
+        <img
+            src="{{ url_for('static', filename='img/img.png') }}"
+            alt=""
+            class="cadastro-illustration"
+            aria-hidden="true"
+        >
+
+        <section class="cadastro-card">
+            <header class="cadastro-header">
+                <span class="logo-icon">✦</span>
+                <h1>ESSENZA</h1>
+                <h2>Criar sua conta</h2>
+                <p>Preencha os dados para começar</p>
+            </header>
+
+            <form id="formCadastro" action="{{ url_for('cadastro') }}" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome completo</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite seu nome completo"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Criar senha</label>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Crie uma senha segura"
+                            autocomplete="new-password"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="senha"
+                            aria-label="Mostrar senha"
+                            aria-pressed="false"
+                        >
+                            Mostrar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="password-requirements">
+                    <p>Sua senha precisa ter:</p>
+                    <div id="req-tamanho" class="requirement">
+                        <span class="status-icon">○</span> Mínimo de 8 caracteres
+                    </div>
+                    <div id="req-maiuscula" class="requirement">
+                        <span class="status-icon">○</span> Uma letra maiúscula
+                    </div>
+                    <div id="req-minuscula" class="requirement">
+                        <span class="status-icon">○</span> Uma letra minúscula
+                    </div>
+                    <div id="req-numero" class="requirement">
+                        <span class="status-icon">○</span> Um número
+                    </div>
+                    <div id="req-simbolo" class="requirement">
+                        <span class="status-icon">○</span> Um símbolo especial
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarSenha">Confirmar senha</label>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="confirmarSenha"
+                            name="confirmar_senha"
+                            placeholder="Complete os requisitos primeiro"
+                            autocomplete="new-password"
+                            disabled
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="confirmarSenha"
+                            aria-label="Mostrar confirmação de senha"
+                            aria-pressed="false"
+                            disabled
+                        >
+                            Mostrar
+                        </button>
+                    </div>
+                    <small id="mensagemSenha" class="mensagem-senha" aria-live="polite">
+                        Complete os requisitos para liberar.
+                    </small>
+                </div>
+
+                <button type="submit" id="btnCadastrar" class="btn-cadastrar" disabled>
+                    Criar conta
+                </button>
+            </form>
+
+            <footer class="cadastro-footer">
+                <p>
+                    Já possui uma conta?
+                    <a href="{{ url_for('login') }}">Fazer login</a>
+                </p>
+            </footer>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/cadastro.js') }}"></script>
+</body>
+</html>
