@@ -142,6 +142,28 @@ def inicializar_financeiro():
         conn.close()
 
 
+def criar_tabela_agendamentos():
+    conn = get_db()
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS agendamentos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                cliente_nome TEXT NOT NULL,
+                telefone TEXT NOT NULL,
+                procedimento TEXT NOT NULL,
+                data TEXT NOT NULL,
+                horario TEXT NOT NULL,
+                duracao INTEGER NOT NULL DEFAULT 60,
+                valor REAL NOT NULL DEFAULT 0,
+                status TEXT NOT NULL DEFAULT 'pending',
+                criado_em TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn.commit()
+    finally:
+        conn.close()
+
+criar_tabela_agendamentos()
 criar_tabela_configuracoes()
 criar_tabela_usuarios()
 inicializar_tabela_clientes()
@@ -220,8 +242,8 @@ def login():
             ).fetchone()
         finally:
             conn.close()
-        
-       
+
+
         if not usuario or not check_password_hash(usuario["senha_hash"], senha):
             flash("E-mail ou senha incorretos.", "error")
             return redirect(url_for("login"))
@@ -960,26 +982,6 @@ def atualizar_status_financeiro(id):
     except sqlite3.Error:
         app.logger.exception("Erro ao atualizar pagamento")
         return jsonify({"erro": "Não foi possível atualizar o pagamento."}), 500
-    finally:
-        conn.close()
-    def criar_tabela_agendamentos():
-    conn = get_db()
-    try:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS agendamentos (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                cliente_nome TEXT NOT NULL,
-                telefone TEXT NOT NULL,
-                procedimento TEXT NOT NULL,
-                data TEXT NOT NULL,
-                horario TEXT NOT NULL,
-                duracao INTEGER NOT NULL DEFAULT 60,
-                valor REAL NOT NULL DEFAULT 0,
-                status TEXT NOT NULL DEFAULT 'pending',
-                criado_em TEXT DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
-        conn.commit()
     finally:
         conn.close()
 
