@@ -178,6 +178,13 @@ def login_required():
 
 
 @app.route("/")
+def entrada():
+    # Ao abrir o endereço principal, encerra a sessão anterior e exibe o login.
+    session.clear()
+    return redirect(url_for("login"))
+
+
+@app.route("/dashboard")
 def index():
     guard = login_required()
     if guard:
