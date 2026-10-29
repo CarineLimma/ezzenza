@@ -221,11 +221,12 @@ def login():
         finally:
             conn.close()
         
-        app.logger.warning(
+           app.logger.warning(
             "LOGIN TESTE: usuario_encontrado=%s",
             usuario is not None 
         )
 
+     
         if not usuario or not check_password_hash(usuario["senha_hash"], senha):
             flash("E-mail ou senha incorretos.", "error")
             return redirect(url_for("login"))
@@ -971,6 +972,6 @@ def atualizar_status_financeiro(id):
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=500.
+        port=500,
         debug=True
         )
