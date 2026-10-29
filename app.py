@@ -962,7 +962,26 @@ def atualizar_status_financeiro(id):
         return jsonify({"erro": "Não foi possível atualizar o pagamento."}), 500
     finally:
         conn.close()
-
+    def criar_tabela_agendamentos():
+    conn = get_db()
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS agendamentos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                cliente_nome TEXT NOT NULL,
+                telefone TEXT NOT NULL,
+                procedimento TEXT NOT NULL,
+                data TEXT NOT NULL,
+                horario TEXT NOT NULL,
+                duracao INTEGER NOT NULL DEFAULT 60,
+                valor REAL NOT NULL DEFAULT 0,
+                status TEXT NOT NULL DEFAULT 'pending',
+                criado_em TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn.commit()
+    finally:
+        conn.close()
 
 if __name__ == "__main__":
     app.run(
