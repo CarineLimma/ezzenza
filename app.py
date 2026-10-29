@@ -32,7 +32,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 if not app.config["SECRET_KEY"]:
-    raise RuntimeError("SECRET_KEY não configurada no .env")
+    raise RuntimeError("SECRET_KEY não configurada no .env" )
 
 
 def get_db():
@@ -220,6 +220,11 @@ def login():
             ).fetchone()
         finally:
             conn.close()
+        
+        app.logger.warning(
+            "LOGIN TESTE: usuario_encontrado=%s",
+            usuario is not None 
+        )
 
         if not usuario or not check_password_hash(usuario["senha_hash"], senha):
             flash("E-mail ou senha incorretos.", "error")
@@ -964,4 +969,8 @@ def atualizar_status_financeiro(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=500.
+        debug=True
+        )
